@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mon Dex</title>
+  <link rel="stylesheet" href="./dist/output.css">
+</head>
+<body class="bg-[#11151D] font-body text-white overflow-x-hidden">
+
+  <!-- ===================== EN-TÊTE ===================== -->
+  <header class="bg-black text-white ">
+    <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-5 border-b-[#303947] border-b-[0.5px]">
+      <div class="flex items-center gap-3">
+        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand">
+          <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 52 50"><title>yu-gi-oh-alt</title><circle cx="25.553" cy="22.551" r="2.866" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25.553" cy="22.551" r="7.579" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M25.553 14.972c6.92 0 10.126 7.193 16.097 7.193h3.782c1.21 0 1.753-.587 1.234-2.369c-.46-1.583-1.674-2.032-4.25-2.032c-7.164 0-7.28-7.196-16.863-7.196s-9.7 7.196-16.863 7.196c-2.576 0-3.79.45-4.25 2.032c-.52 1.782.024 2.369 1.233 2.369h3.783c5.97 0 9.176-7.193 16.097-7.193m19.107 7.193c.985 0 2.393 1.147 2.393 2.817s-.723 2.057-2.12 2.057h-4.312c-3.291 0-3.39 7.629-15.068 7.629s-11.777-7.63-15.068-7.63H6.172c-1.396 0-2.12-.386-2.12-2.056s1.409-2.817 2.394-2.817"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M45.621 26.994c-.367 4.268-5.4 17.302-20.068 17.302c-14.67 0-19.702-13.033-20.069-17.302m39.622-8.899C43.089 8.565 33.122 3.704 25.553 3.704S8.017 8.565 6 18.094"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M39.133 21.729c-3.997.174-1.748 8.401-13.58 8.401s-9.583-8.227-13.58-8.401"/></svg>
+        </div>
+        <div class="flex flex-col">
+          <p class="font-display text-2xl font-extrabold leading-9 text-brand">Yugi Mutou</p>
+          <p class="text-sm text-white">Yu-Gi-Oh!</p>
+        </div>
+
+       
+      </div>
+      <nav aria-label="Navigation principale" class="flex flex-wrap gap-2">
+        <a href="#grid" class="rounded-full bg-brand px-4 py-2">Cards</a>
+        <a href="#team" class="rounded-full bg-brand px-4 py-2">My Cards · <span id="team-count">0</span>/6</a>
+        <a href="#create" class="rounded-full bg-white px-4 py-2 font-bold text-ink">+ New Card</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-8">
+
+    <!-- ===================== RECHERCHE ET FILTRES ===================== -->
+    <section aria-label="Recherche et filtres" class="flex flex-col gap-4">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <h1 class="font-display text-4xl font-extrabold">Find a Card</h1>
+        <label class="flex w-full max-w-md flex-col gap-1 text-sm font-bold">
+          Search by Name
+          <input id="search" type="search" placeholder="ex. Mossling" class="field text-white bg-[#253348] border border-[#303947] font-normal">
+        </label>
+      </div>
+      <div id="filters" role="group" aria-label="Filtrer par type" class="flex h-auto flex-wrap gap-2 ">
+          <button type="button" class="type chip bg-brand text-white border border-[#303947] shrink-0">All</button>
+          <!-- <button type="button" class="chip shrink-0">Feu</button>
+          <button type="button" class="chip shrink-0">Eau</button>
+          <button type="button" class="chip shrink-0">Plante</button>
+          <button type="button" class="chip shrink-0">Électrik</button>
+          <button type="button" class="chip shrink-0">Glace</button>
+          <button type="button" class="chip shrink-0">Ténèbres</button> -->
+      </div>
+    </section>
+
+    <div class="block gap-8 items-start xl:flex">
+
+      <!-- ===================== GRILLE DES CRÉATURES ===================== -->
+      <section id="grid" aria-label="Créatures" class="grid min-w-0 flex-1 grid-cols-1 gap-5 mb-10 sm:grid-cols-2 md:grid-cols-3 sm:mb-10 md:mb-10">
+
+      
+
+        
+
+        <!-- Carte écrite à la main : à remplacer par des cartes générées en JS (Partie 2) -->
+        <!-- <article class="flex flex-col gap-3 rounded-card border-[#31333A] border p-3 pb-4 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg cursor-pointer">
+          <div class="relative flex h-64 items-center justify-center rounded-xl bg-brand-light">
+            
+            <span class="absolute left-3 top-2 font-mono text-sm text-muted">#001</span>
+          </div>
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="font-display text-xl font-semibold">Emberkit</h3>
+            <span class="rounded-full bg-brand-light px-3 py-1 text-sm font-bold text-ink">Feu</span>
+          </div>
+          <p class="text-sm text-muted">Base · Total 309</p>
+          <button type="button" class="btn-outline hover:bg-brand ">Add to my Collections</button>
+        </article> -->
+
+        
+
+      </section>
+
+      <aside class="flex  w-[380px] md:w-[420px] shrink-0 flex-col gap-6 ">
+
+        <!-- ===================== PANNEAU DE DÉTAIL ===================== -->
+        <section id="detail" aria-label="Détail de la créature" class="flex flex-col gap-4 rounded-card border border-[#303947] bg-[#171E29] p-6 ">
+
+              <div class="font-display text-2xl font-extrabold text-white">No Card Selected</div>
+          
+
+          
+          
+          <!-- <div class="flex items-center justify-between">
+            <span class="font-mono text-sm text-muted">#003 · Détail</span>
+            <button type="button" aria-label="Fermer le détail" class="btn-outline w-11 px-0">✕</button>
+          </div>
+          <div class="flex h-48 items-center justify-center rounded-2xl bg-brand-light">
+            <svg aria-hidden="true" class="h-20 w-20 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16c0-5 3.5-9 8-9s8 4 8 9"></path><circle cx="9" cy="12" r="1"></circle><circle cx="15" cy="12" r="1"></circle><path d="M7 7 5 3M17 7l2-4"></path></svg>
+          </div>
+          <div class="flex items-center justify-between">
+            <h2 class="font-display text-3xl font-extrabold text-ink">Mossling</h2>
+            <span class="rounded-full bg-brand-light px-3 py-1 text-sm font-bold">Plante</span>
+          </div>
+          <p class="text-gray-700">Une créature calme qui dort sous les feuilles mortes et se réveille quand il pleut.</p>
+          <div class="flex flex-col gap-2 text-sm">
+            <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2"><span class="font-bold text-muted">PV</span><span class="h-3 rounded-full bg-ground"><span class="block h-3 w-[30%] rounded-full bg-brand"></span></span><span class="text-right text-muted font-mono">45</span></div>
+            <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2"><span class="font-bold text-muted">Attaque</span><span class="h-3 rounded-full bg-ground"><span class="block h-3 w-[33%] rounded-full bg-brand"></span></span><span class="text-right font-mono text-muted">49</span></div>
+            <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2"><span class="font-bold text-muted">Défense</span><span class="h-3 rounded-full bg-ground"><span class="block h-3 w-[43%] rounded-full bg-brand"></span></span><span class="text-right font-mono text-muted">65</span></div>
+          </div>
+          <button type="button" class="btn-primary">Ajouter à l'équipe</button> -->
+        </section>
+
+        <!-- ===================== MON ÉQUIPE (INCOMPLÈTE) ===================== -->
+        <section id="team" aria-label="Mon équipe" class="rounded-card bg-[#171E29] border-[#303947] border p-6  ">
+          <h2 class="font-display text-2xl font-extrabold mb-5 text-white">My Collections</h2>
+          <!-- TODO (Partie 1) : terminez cette section en suivant la maquette :
+               compteur x/6, 6 emplacements (vides ou remplis), message de règles. -->
+               <div id="team-grid" class="grid grid-cols-2 gap-4">
+    
+               </div>
+        </section>
+
+      </aside>
+    </div>
+
+    <!-- ===================== FORMULAIRE DE CRÉATION ===================== -->
+    <section id="create" aria-label="Nouvelle créature" class="flex flex-col gap-6 rounded-card bg-[#171E29] border border-[#303947] p-8 h-auto">
+      <div>
+        <h2 class="font-display text-3xl font-extrabold">New Card</h2>
+        <p class="text-muted">Chaque champ est vérifié avant l'ajout de la créature.</p>
+      </div>
+      <form id="creature-form" novalidate class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <label class="flex flex-col gap-1 text-sm font-bold text-[#F3F4F6]">Numéro
+          <input name="id" type="text" placeholder="#010" class="field bg-[#11151D] text-white font-normal">
+          <span class="error-message text-sm font-normal text-muted"></span>
+        </label>
+        <label class="flex flex-col gap-1 text-sm font-bold text-[#F3F4F6]">Nom
+          <input name="name" type="text" placeholder="Nom de la créature" class="field bg-[#11151D] text-white font-normal">
+          <span class="error-message text-sm font-normal text-muted"></span>
+        </label>
+        <label class="flex flex-col gap-1 text-sm font-bold text-[#F3F4F6]">Type
+          <select name="type" class="field font-normal bg-[#11151D] text-white">
+            <option value="">Choisir un type</option>
+            <option>Feu</option><option>Eau</option><option>Plante</option>
+            <option>Électrik</option><option>Glace</option><option>Ténèbres</option>
+          </select>
+          <span class="error-message text-sm font-normal text-muted"></span>
+        </label>
+        <label class="flex flex-col gap-1 text-sm font-bold text-[#F3F4F6]">Niveau
+          <input name="level" type="text" placeholder="Base, Niveau 1…" class="field bg-[#11151D] text-white font-normal">
+          <span class="error-message text-sm font-normal text-muted"></span>
+        </label>
+        <label class="flex flex-col gap-1 text-sm font-bold text-[#F3F4F6]">Statistique 1
+          <input name="stat1" type="text" placeholder="0 à 999" class="field bg-[#11151D] text-white font-normal">
+          <span class="error-message text-sm font-normal text-muted"></span>
+        </label>
+        <label class="flex flex-col gap-1 text-sm font-bold text-[#F3F4F6]">Statistique 2
+          <input name="stat2" type="text" placeholder="0 à 999" class="field bg-[#11151D] text-white font-normal">
+          <span class="error-message text-sm font-normal text-muted"></span>
+        </label>
+        <label class="flex flex-col gap-1 text-sm font-bold text-[#F3F4F6]">Statistique 3
+          <input name="stat3" type="text" placeholder="0 à 999" class="field bg-[#11151D] text-white font-normal">
+          <span class="error-message text-sm font-normal text-muted"></span>
+        </label>
+        <label class="flex flex-col gap-1 text-sm font-bold text-[#F3F4F6]">Lien de l'image
+          <input name="image" type="text" placeholder="https://…/image.png" class="field font-normal bg-[#11151D] text-white">
+          <span class="error-message text-sm font-normal text-muted"></span>
+        </label>
+        <label class="flex flex-col gap-1 text-sm font-bold md:col-span-2 lg:col-span-4 text-[#F3F4F6]">Description
+          <textarea name="description" rows="3" placeholder="10 à 200 caractères" class="field h-auto bg-[#11151D] text-white rounded-xl  p-3 font-normal "></textarea>
+          <span class="error-message text-sm font-normal text-muted"></span>
+        </label>
+        <div class="flex flex-wrap justify-end gap-3 md:col-span-2 lg:col-span-4">
+          <button type="reset" class="btn-outline px-6">Effacer</button>
+          <button type="submit" id="create-card" class="btn-primary">Create Card</button>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+
+
+  <footer class="mx-auto max-w-7xl px-8 pb-10 text-sm text-brand">
+    Images : [https://ygoprodeck.com/api-guide/]. Projet de fans réalisé dans le cadre d'une formation.
+  </footer>
+
+  <!-- data.js (à créer) doit être chargé AVANT script.js -->
+  <script type="module" src="./data.js"></script>
+  <script type="module" src="./script.js"></script>
+</body>
+</html>
