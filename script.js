@@ -210,6 +210,7 @@ form.addEventListener("reset", () => {
 // construisez la grille à partir du tableau `creatures`.
 // -------------------------------------------------------------
 const cardContainer = document.getElementById("grid")
+
 const showCards = (cards) =>{
     cardContainer.innerHTML = "";
 
@@ -234,6 +235,8 @@ const showCards = (cards) =>{
 
           cardContainer.appendChild(article);
     })
+
+    
 
     
 
@@ -478,6 +481,7 @@ form.addEventListener('submit'  , (e) =>{
 
         showCards(cards);
         loadCardDetails();
+        form.reset();
         
     }
     
@@ -574,19 +578,84 @@ GlobalEventListner("click", ".closeBtn", (e) => {
 // -------------------------------------------------------------
 
 
+// --------------------------------------------------------------
+// Brief 1 sprint 3
+// --------------------------------------------------------------
+
+const loader = document.querySelector("#loader");
+
+const showLoading = () => {
+    loader.classList.remove("hidden");
+    loader.classList.add("flex");
+};
+
+const hideLoading = () => {
+    loader.classList.remove("flex");
+    loader.classList.add("hidden");
+};
+
+
+// load more function 
+
+let offset = 20;
+const limit = 20;
+
+const loadCards = async () => {
+  loadMoreBtn.disabled = true;
+
+  try {
+    const newCards = await getData(offset);
+
+    cards.push(...newCards);
+    offset += limit;
+
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loadMoreBtn.disabled = false;
+    loadCardDetails()
+  }
+};
+
+const loadMoreBtn = document.querySelector("#loadMoreBtn");
+
+loadMoreBtn.addEventListener("click", async () => {
+    await loadCards();
+    showCards(cards);
+    loadCardDetails()
+});
+
+
+// Search in api 
+
+
+
+
+
+
+
 const main = async () => {
 
- cards = await getData();
+ showLoading();
 
-    let customCards = JSON.parse(localStorage.getItem("customCards")) || [];
+    try {
 
-    cards = cards.concat(customCards);
+        await loadCards();
+        let customCards = JSON.parse(localStorage.getItem("customCards")) || [];
 
-    
-  showCards(cards)
-  loadType()
-  loadCardByType()
-  loadCardDetails()
+        cards = cards.concat(customCards);
+
+        showCards(cards);
+        loadType();
+        loadCardByType();
+        loadCardDetails();
+
+    } catch (error) {
+        console.error(error);
+
+    } finally {
+        hideLoading();
+    }
 
 
   

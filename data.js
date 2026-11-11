@@ -16,13 +16,21 @@
 //
 // Pensez à citer la source de vos images dans le README.
 
-export const getData = async () => {
+export const getData = async (offset) => {
   try {
 
-    const res = await fetch("https://db.ygoprodeck.com/api/v7/cardinfo.php?num=12&offset=12");
-    const data = await res.json();
+    const res = await fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=${offset}`);
+    if(res.ok){
+      
+      const data = await res.json();
+      return data.data;
+    }
+    else{
+     
+      throw new Error(`HTTP Error: ${res.status}`);
+    
+    }
 
-    return data.data;
 
   } catch (error) {
     console.log(error)

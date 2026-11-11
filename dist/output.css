@@ -624,12 +624,20 @@ video {
   outline-offset: 2px;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
 
 .relative {
   position: relative;
+}
+
+.sticky {
+  position: sticky;
 }
 
 .left-3 {
@@ -653,12 +661,12 @@ video {
   margin-right: auto;
 }
 
-.mb-10 {
-  margin-bottom: 2.5rem;
-}
-
 .mb-5 {
   margin-bottom: 1.25rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
 }
 
 .block {
@@ -673,12 +681,20 @@ video {
   display: grid;
 }
 
+.hidden {
+  display: none;
+}
+
 .h-10 {
   height: 2.5rem;
 }
 
 .h-11 {
   height: 2.75rem;
+}
+
+.h-12 {
+  height: 3rem;
 }
 
 .h-20 {
@@ -705,6 +721,10 @@ video {
   height: 18rem;
 }
 
+.h-8 {
+  height: 2rem;
+}
+
 .h-9 {
   height: 2.25rem;
 }
@@ -713,12 +733,24 @@ video {
   height: auto;
 }
 
+.h-full {
+  height: 100%;
+}
+
 .w-11 {
   width: 2.75rem;
 }
 
 .w-20 {
   width: 5rem;
+}
+
+.w-28 {
+  width: 7rem;
+}
+
+.w-8 {
+  width: 2rem;
 }
 
 .w-9 {
@@ -767,6 +799,16 @@ video {
 
 .shrink-0 {
   flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 .cursor-not-allowed {
@@ -865,12 +907,20 @@ video {
   border-radius: 9999px;
 }
 
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
 .rounded-xl {
   border-radius: 0.75rem;
 }
 
 .border {
   border-width: 1px;
+}
+
+.border-4 {
+  border-width: 4px;
 }
 
 .border-b-\[0\.5px\] {
@@ -887,9 +937,19 @@ video {
   border-color: rgb(49 51 58 / var(--tw-border-opacity, 1));
 }
 
+.border-gray-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
+}
+
 .border-b-\[\#303947\] {
   --tw-border-opacity: 1;
   border-bottom-color: rgb(48 57 71 / var(--tw-border-opacity, 1));
+}
+
+.border-t-brand {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(255 94 0 / var(--tw-border-opacity, 1));
 }
 
 .bg-\[\#11151D\] {
@@ -986,6 +1046,11 @@ video {
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
+}
+
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .py-2 {
@@ -1150,8 +1215,8 @@ video {
 }
 
 @media (min-width: 640px) {
-  .sm\:mb-10 {
-    margin-bottom: 2.5rem;
+  .sm\:mb-6 {
+    margin-bottom: 1.5rem;
   }
 
   .sm\:grid-cols-2 {
@@ -1164,8 +1229,8 @@ video {
     grid-column: span 2 / span 2;
   }
 
-  .md\:mb-10 {
-    margin-bottom: 2.5rem;
+  .md\:mb-6 {
+    margin-bottom: 1.5rem;
   }
 
   .md\:w-\[420px\] {
