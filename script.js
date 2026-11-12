@@ -1,8 +1,9 @@
 
 //getting data from data.js 
 
-import {getData} from './data.js'
+import {getData, searchCards} from './data.js'
 let cards = [];
+let allCards = [];
 
 
 
@@ -248,65 +249,121 @@ const showCards = (cards) =>{
 // image, description, et statistiques affichées en barres.
 // -------------------------------------------------------------
 
-const loadCardDetails = () =>{
 
-    const articles = document.querySelectorAll(".article");
-    
+const loadCardDetails = () => {
+
+    const cardContainer = document.querySelector("#grid");
     const detailSection = document.getElementById("detail");
 
-    
-    articles.forEach((article)=>{
-    article.addEventListener("click", (e)=>{
-        
+    cardContainer.addEventListener("click", (e) => {
+
+        const article = e.target.closest(".article");
+
+        if (!article) return;
+
         if (e.target.closest(".AddtoCollection")) {
             return;
         }
-        
 
-       let id =  article.getAttribute("data-id");
+        const id = article.getAttribute("data-id");
 
-       cards.forEach((card)=>{
-        if(card.id == id){
-            detailSection.dataset.id = card.id;
-            detailSection.innerHTML = `<div class="flex items-center justify-between ">
-            <span class="font-mono text-sm text-[#9CA9BC]">${card.id} · Détail</span>
-            <button type="button" aria-label="Fermer le détail" class="closeBtn btn-outline w-11 px-0">✕</button>
-          </div>
-          <div class="flex h-64 items-center justify-center rounded-2xl border border-[#303947]">
-            <img class="absolute h-56 " src="${card.card_images[0].image_url}" alt="">
-          </div>
-          <div class="flex items-center justify-between">
-            <h2 class="font-display text-3xl font-extrabold max-w-[240px] text-white">${card.name}</h2>
-            <span class="rounded-full bg-[#253348] border border-[#303947] shrink-0 px-3 py-1 text-sm font-bold">${card.type}</span>
-          </div>
-          <p class="text-[#9CA9BC]">${card.desc}</p>
-          <div class="flex flex-col gap-2 text-sm">
-            <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2"><span class="font-bold text-[#9CA9BC]">Level</span><span class="h-3 rounded-full bg-ground"><span class="block h-3  rounded-full bg-brand" " style="width: ${Math.min(((card.level ?? 0) / 12) * 100, 100)}%"></span></span><span class="text-right text-[#9CA9BC] font-mono">${card.level ?? "-"}</span></div>
-            <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2"><span class="font-bold text-[#9CA9BC]">Attaque</span><span class="h-3 rounded-full bg-ground"><span class="block h-3  rounded-full bg-brand" " style="width: ${Math.min(((card.atk ?? 0) / 5000) * 100, 100)}%"></span></span><span class="text-right font-mono text-[#9CA9BC]">${card.atk ?? "-"}</span></div>
-            <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2"><span class="font-bold text-[#9CA9BC]">Défense</span><span class="h-3 rounded-full bg-ground"><span class="block h-3  rounded-full bg-brand" " style="width: ${Math.min(((card.def ?? 0) / 5000) * 100, 100)}%"></span></span><span class="text-right font-mono text-[#9CA9BC]">${card.def ?? "-"}</span></div>
-          </div>
-          <button type="button" class="btn-primary AddtoCollection">Add to My Collections</button>`
-          const closeBtn = document.querySelector(".closeBtn");
+        const card = cards.find(card => card.id == id);
 
-          closeBtn.addEventListener("click" , ()=>{
-            detailSection.innerHTML = `<div class="font-display text-2xl font-extrabold text-white">No Card Selected</div>`
-          })
-        }
-       })
+        if (!card) return;
 
-       if (teamgrid.children.length >= 6) {
-        document.querySelectorAll(".AddtoCollection").forEach((btn) => {
-            btn.disabled = true;
-            btn.classList.add("opacity-40", "cursor-not-allowed");
-            btn.textContent = "Collection is Full";
+        detailSection.dataset.id = card.id;
+
+        detailSection.innerHTML = `
+            <div class="flex items-center justify-between">
+                <span class="font-mono text-sm text-[#9CA9BC]">
+                    ${card.id} · Détail
+                </span>
+                <button type="button" aria-label="Fermer le détail"
+                    class="closeBtn btn-outline w-11 px-0">✕</button>
+            </div>
+
+            <div class="flex h-64 items-center justify-center rounded-2xl border border-[#303947]">
+                <img class="absolute h-56"
+                    src="${card.card_images[0].image_url}" alt="">
+            </div>
+
+            <div class="flex items-center justify-between">
+                <h2 class="font-display text-3xl font-extrabold max-w-[240px] text-white">
+                    ${card.name}
+                </h2>
+                <span class="rounded-full bg-[#253348] border border-[#303947] shrink-0 px-3 py-1 text-sm font-bold">
+                    ${card.type}
+                </span>
+            </div>
+
+            <p class="text-[#9CA9BC]">${card.desc}</p>
+
+            <div class="flex flex-col gap-2 text-sm">
+
+                <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2">
+                    <span class="font-bold text-[#9CA9BC]">Level</span>
+                    <span class="h-3 rounded-full bg-ground">
+                        <span class="block h-3 rounded-full bg-brand"
+                            style="width: ${Math.min(((card.level ?? 0) / 12) * 100, 100)}%">
+                        </span>
+                    </span>
+                    <span class="text-right text-[#9CA9BC] font-mono">
+                        ${card.level ?? "-"}
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2">
+                    <span class="font-bold text-[#9CA9BC]">Attaque</span>
+                    <span class="h-3 rounded-full bg-ground">
+                        <span class="block h-3 rounded-full bg-brand"
+                            style="width: ${Math.min(((card.atk ?? 0) / 5000) * 100, 100)}%">
+                        </span>
+                    </span>
+                    <span class="text-right font-mono text-[#9CA9BC]">
+                        ${card.atk ?? "-"}
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-[80px_1fr_40px] items-center gap-2">
+                    <span class="font-bold text-[#9CA9BC]">Défense</span>
+                    <span class="h-3 rounded-full bg-ground">
+                        <span class="block h-3 rounded-full bg-brand"
+                            style="width: ${Math.min(((card.def ?? 0) / 5000) * 100, 100)}%">
+                        </span>
+                    </span>
+                    <span class="text-right font-mono text-[#9CA9BC]">
+                        ${card.def ?? "-"}
+                    </span>
+                </div>
+
+            </div>
+
+            <button type="button" class="btn-primary AddtoCollection">
+                Add to My Collections
+            </button>
+        `;
+
+        const closeBtn = detailSection.querySelector(".closeBtn");
+
+        closeBtn.addEventListener("click", () => {
+            detailSection.innerHTML = `
+                <div class="font-display text-2xl font-extrabold text-white">
+                    No Card Selected
+                </div>
+            `;
         });
-    }
-        
-    } )
-})
-    
 
-}
+        if (teamgrid.children.length >= 6) {
+            document.querySelectorAll(".AddtoCollection").forEach((btn) => {
+                btn.disabled = true;
+                btn.classList.add("opacity-40", "cursor-not-allowed");
+                btn.textContent = "Collection is Full";
+            });
+        }
+
+    });
+};
+
 
 
 
@@ -316,27 +373,27 @@ const loadCardDetails = () =>{
 // (sans tenir compte des majuscules).
 // -------------------------------------------------------------
 
-const searchField = document.getElementById("search");
+// const searchField = document.getElementById("search");
 
-searchField.addEventListener("input", (e) =>{
+// searchField.addEventListener("input", (e) =>{
 
     
 
-    const searchValue = e.target.value.toLowerCase();
+//     const searchValue = e.target.value.toLowerCase();
 
-    console.log("Searching:", searchValue);
-  console.log("Cards:", cards);
-    const filteredCards = cards.filter((card) =>
-    card.name.toLowerCase().includes(searchValue)
-    );
+//     console.log("Searching:", searchValue);
+//   console.log("Cards:", cards);
+//     const filteredCards = cards.filter((card) =>
+//     card.name.toLowerCase().includes(searchValue)
+//     );
 
-    console.log("Results:", filteredCards);
-    showCards(filteredCards);
+//     console.log("Results:", filteredCards);
+//     showCards(filteredCards);
 
 
 
    
-})
+// })
 
 // -------------------------------------------------------------
 // 4. FILTRE
@@ -414,12 +471,12 @@ const loadCardByType = () =>{
                   
 
                     cardContainer.appendChild(article);
-                    loadCardDetails()
+                    
 
                 }else if(typebtn.textContent == "All"){
                     cardContainer.innerHTML = "";
                     showCards(cards);
-                    loadCardDetails()
+                    
                    
 
                 }
@@ -480,7 +537,7 @@ form.addEventListener('submit'  , (e) =>{
         cards.push(newCard);
 
         showCards(cards);
-        loadCardDetails();
+       
         form.reset();
         
     }
@@ -584,14 +641,20 @@ GlobalEventListner("click", ".closeBtn", (e) => {
 
 const loader = document.querySelector("#loader");
 
+
 const showLoading = () => {
     loader.classList.remove("hidden");
     loader.classList.add("flex");
+    cardContainer.classList.remove("grid");
+    cardContainer.classList.add("hidden");
+    
 };
 
 const hideLoading = () => {
     loader.classList.remove("flex");
     loader.classList.add("hidden");
+    cardContainer.classList.remove("hidden");
+    cardContainer.classList.add("grid");
 };
 
 
@@ -606,14 +669,15 @@ const loadCards = async () => {
   try {
     const newCards = await getData(offset);
 
-    cards.push(...newCards);
+    allCards.push(...newCards);
+    cards = [...allCards];
     offset += limit;
 
   } catch (error) {
     console.log(error);
   } finally {
     loadMoreBtn.disabled = false;
-    loadCardDetails()
+    
   }
 };
 
@@ -622,13 +686,53 @@ const loadMoreBtn = document.querySelector("#loadMoreBtn");
 loadMoreBtn.addEventListener("click", async () => {
     await loadCards();
     showCards(cards);
-    loadCardDetails()
+   
 });
 
+// debouncing
+
+const debounce = (callback, delay) => {
+  let timer;
+
+  return (...args) => {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      callback(...args);
+    }, delay);
+  };
+};
 
 // Search in api 
 
+const searchField = document.getElementById("search");
 
+searchField.addEventListener("input" ,debounce( async ()=>{
+
+    const searchValue = searchField.value.trim();
+
+    if(searchValue === ""){
+        cards = [...allCards];
+        showCards(cards);
+        return;
+    }
+
+    showLoading()
+    try {
+        const results = await searchCards(searchValue);
+
+        cards = results;
+
+        showCards(cards);
+        
+        
+    } catch (error) {
+        console.log(error);
+    }finally{
+        hideLoading()
+        
+    }
+}),500)
 
 
 
@@ -645,6 +749,8 @@ const main = async () => {
 
         cards = cards.concat(customCards);
 
+        
+        allCards = [...cards];
         showCards(cards);
         loadType();
         loadCardByType();

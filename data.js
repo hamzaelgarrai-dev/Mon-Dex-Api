@@ -38,3 +38,21 @@ export const getData = async (offset) => {
   }
 };
 
+// search in the api function
+
+export const searchCards = async (value) =>{
+
+  const res = await fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=${(value)}`)
+
+   if(res.ok){
+      
+      const data = await res.json();
+      return data.data;
+    }
+    else{
+     
+      throw new Error(`HTTP Error: ${res.status}`);
+    
+    }
+
+}
