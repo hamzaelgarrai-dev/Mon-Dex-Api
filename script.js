@@ -707,32 +707,61 @@ const debounce = (callback, delay) => {
 
 const searchField = document.getElementById("search");
 
-searchField.addEventListener("input" ,debounce( async ()=>{
-
+searchField.addEventListener("input", debounce(async () => {
     const searchValue = searchField.value.trim();
 
-    if(searchValue === ""){
-        cards = [...allCards];
-        showCards(cards);
-        return;
+    if (searchValue === "") {
+      hideMessage();
+      cards = [...allCards];
+      showCards(cards);
+      return;
     }
-
-    showLoading()
+    hideMessage();
+    showLoading();
     try {
-        const results = await searchCards(searchValue);
+      const results = await searchCards(searchValue);
 
-        cards = results;
-
+      if (results.length === 0) {
+        cards = [];
         showCards(cards);
-        
-        
+        showMessage("No cards found. Try another name.");
+        return;
+      }
+
+      cards = results;
+      showCards(cards);
     } catch (error) {
-        console.log(error);
-    }finally{
-        hideLoading()
-        
+      console.log(error);
+
+      if (error instanceof TypeError) {
+        showMessage("Network error! Please check your internet connection.");
+      } else {
+        showMessage("Something went wrong. Please try again.");
+      }
+    } finally {
+      hideLoading();
     }
-}),500)
+  }),
+  400,
+);
+
+// handle error functions 
+
+const message = document.getElementById("message");
+
+const showMessage = (text) =>{
+
+    message.textContent = text;
+    message.classList.remove("hidden")
+
+}
+
+const hideMessage = (text) =>{
+
+    message.textContent = "";
+    message.classList.add("hidden")
+
+}
 
 
 
@@ -757,7 +786,13 @@ const main = async () => {
         loadCardDetails();
 
     } catch (error) {
-        console.error(error);
+        console.log(error);
+
+        if (error instanceof TypeError) {
+            showMessage("Network error! Please check your internet connection.");
+        } else {
+            showMessage("Something went wrong. Please try again.");
+        }
 
     } finally {
         hideLoading();

@@ -44,15 +44,16 @@ export const searchCards = async (value) =>{
 
   const res = await fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=${(value)}`)
 
-   if(res.ok){
-      
-      const data = await res.json();
-      return data.data;
+   const data = await res.json();
+
+    if (res.status === 400 && data.error) {
+        return [];
     }
-    else{
-     
-      throw new Error(`HTTP Error: ${res.status}`);
-    
+
+    if (!res.ok) {
+        throw new Error("API request failed");
     }
+
+    return data.data;
 
 }
