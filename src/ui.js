@@ -168,7 +168,8 @@ export const showCards = (cards) =>{
         
         <div class=" relative flex h-72 items-center justify-center rounded-xl ">
 
-            <img class="absolute h-72 " src="${card.card_images?.[0]?.image_url || ''}" alt="">
+            <img class="absolute h-72 " src="${card.card_images?.[0]?.image_url || ''}" loading="lazy"
+    decoding="async">
             
             
           </div>

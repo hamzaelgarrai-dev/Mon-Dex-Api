@@ -17,25 +17,31 @@
 // Pensez à citer la source de vos images dans le README.
 
 export const getData = async (offset) => {
-  try {
 
-    const res = await fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=${offset}`);
-    if(res.ok){
-      
-      const data = await res.json();
-      return data.data;
-    }
-    else{
-     
-      throw new Error(`HTTP Error: ${res.status}`);
+    const cacheKey = `cards_${offset}`;
+
     
+    const cachedCards = sessionStorage.getItem(cacheKey);
+
+    if (cachedCards) {
+        console.log("Cards loaded from cache");
+        return JSON.parse(cachedCards);
     }
 
+  
+    const response = await fetch(
+        `https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=${offset}`
+    );
 
-  } catch (error) {
-    console.log(error)
-    return [];
-  }
+    if (!response.ok) {
+        throw new Error("Failed to fetch cards");
+    }
+
+    const data = await response.json();
+
+    sessionStorage.setItem(cacheKey, JSON.stringify(data.data));
+
+    return data.data;
 };
 
 // search in the api function
